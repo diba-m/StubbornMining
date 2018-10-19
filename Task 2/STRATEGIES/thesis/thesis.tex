@@ -1,0 +1,206 @@
+% Copyright (C) 2014-2016 by Thomas Auzinger <thomas@auzinger.name>
+
+\documentclass[draft,final]{vutinfth} % Remove option 'final' to obtain debug information.
+
+% Load packages to allow in- and output of non-ASCII characters.
+\usepackage{lmodern}        % Use an extension of the original Computer Modern font to minimize the use of bitmapped letters.
+\usepackage[T1]{fontenc}    % Determines font encoding of the output. Font packages have to be included before this line.
+\usepackage[utf8]{inputenc} % Determines encoding of the input. All input files have to use UTF8 encoding.
+
+% Extended LaTeX functionality is enables by including packages with \usepackage{...}.
+\usepackage{amsmath}    % Extended typesetting of mathematical expression.
+\usepackage{amssymb}    % Provides a multitude of mathematical symbols.
+\usepackage{mathtools}  % Further extensions of mathematical typesetting.
+\usepackage{microtype}  % Small-scale typographic enhancements.
+\usepackage[inline]{enumitem} % User control over the layout of lists (itemize, enumerate, description).
+\usepackage{multirow}   % Allows table elements to span several rows.
+\usepackage{booktabs}   % Improves the typesettings of tables.
+\usepackage{subcaption} % Allows the use of subfigures and enables their referencing.
+\usepackage[ruled,linesnumbered,algochapter]{algorithm2e} % Enables the writing of pseudo code.
+\usepackage[usenames,dvipsnames,table]{xcolor} % Allows the definition and use of colors. This package has to be included before tikz.
+\usepackage{nag}       % Issues warnings when best practices in writing LaTeX documents are violated.
+\usepackage{todonotes} % Provides tooltip-like todo notes.
+  \newcommand{\aju}[1]{\todo[linecolor=red,backgroundcolor=magenta!25,bordercolor=magenta,inline,caption={}]{
+    Aljosha: #1}}
+
+\usepackage{hyperref}  % Enables cross linking in the electronic document version. This package has to be included second to last.
+%\usepackage[acronym,nonumberlist,toc]{glossaries} % Enables the generation of glossaries and lists fo acronyms. This package has to be included last.
+
+% packages for landscape table
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}
+
+% packages for landscape table
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}
+
+\usepackage{listings}
+\lstset{
+	aboveskip = 20pt,
+	belowskip = 10pt,
+	numbers   = left,
+	}
+\renewcommand\lstlistlistingname{List of Listings}
+
+% Define convenience functions to use the author name and the thesis title in the PDF document properties.
+\newcommand{\authorname}{Simon Mulser} % The author name without titles.
+\newcommand{\thesistitle}{Simulation of different selfish mining strategies in Bitcoin} % The title of the thesis. The English version should be used, if it exists.
+
+% Set PDF document properties
+\hypersetup{
+    pdfpagelayout   = TwoPageRight,           % How the document is shown in PDF viewers (optional).
+    linkbordercolor = {Melon},                % The color of the borders of boxes around crosslinks (optional).
+    pdfauthor       = {\authorname},          % The author's name in the document properties (optional).
+    pdftitle        = {\thesistitle},         % The document's title in the document properties (optional).
+    pdfsubject      = {Subject},              % The document's subject in the document properties (optional).
+    pdfkeywords     = {a, list, of, keywords} % The document's keywords in the document properties (optional).
+}
+
+\setpnumwidth{2.5em}        % Avoid overfull hboxes in the table of contents (see memoir manual).
+\setsecnumdepth{subsection} % Enumerate subsections.
+
+\nonzeroparskip             % Create space between paragraphs (optional).
+\setlength{\parindent}{0pt} % Remove paragraph identation (optional).
+
+\makeindex      % Use an optional index.
+%\makeglossaries % Use an optional glossary.
+%\glstocfalse   % Remove the glossaries from the table of contents.
+
+% Set persons with 4 arguments:
+%  {title before name}{name}{title after name}{gender}
+%  where both titles are optional (i.e. can be given as empty brackets {}).
+\setauthor{}{\authorname}{BSc}{male}
+\setadvisor{}{Edgar Weippl}{Privatdoz. Mag.rer.soc.oec. Dipl.-Ing. Dr.techn.}{male}
+
+% For bachelor and master theses:
+\setfirstassistant{}{Aljosha Judmayer}{Univ.Lektor Dipl.-Ing.}{male}
+
+% For dissertations:
+\setfirstreviewer{Pretitle}{Forename Surname}{Posttitle}{male}
+\setsecondreviewer{Pretitle}{Forename Surname}{Posttitle}{male}
+
+% For dissertations at the PhD School and optionally for dissertations:
+\setsecondadvisor{Pretitle}{Forename Surname}{Posttitle}{male} % Comment to remove.
+
+% Required data.
+\setaddress{Dadlergasse 18/1/7, 1150 Wien}
+\setregnumber{01027478}
+\setdate{8}{3}{2018} % Set date with 3 arguments: {day}{month}{year}.
+\settitle{\thesistitle}{Simulation of different selfish mining strategies in Bitcoin} % Sets English and German version of the title (both can be English or German).
+\setsubtitle{Simulation respecting network topology and reference implementation}{Simulation respecting network topology and reference implementation} % Sets English and German version of the subtitle (both can be English or German).
+
+% Select the thesis type: bachelor / master / doctor / phd-school.
+% Bachelor:
+%\setthesis{bachelor}
+%
+% Master:
+\setthesis{master}
+\setmasterdegree{dipl.} % dipl. / rer.nat. / rer.soc.oec. / master
+%
+% Doctor:
+%\setthesis{doctor}
+%\setdoctordegree{rer.soc.oec.}% rer.nat. / techn. / rer.soc.oec.
+%
+% Doctor at the PhD School
+%\setthesis{phd-school} % Deactivate non-English title pages (see below)
+
+% For bachelor and master:
+\setcurriculum{Software Engineering \& Internet Computing}{Software Engineering \& Internet Computing} % Sets the English and German name of the curriculum.
+
+% For dissertations at the PhD School:
+\setfirstreviewerdata{Affiliation, Country}
+\setsecondreviewerdata{Affiliation, Country}
+
+
+\begin{document}
+
+\frontmatter % Switches to roman numbering.
+% The structure of the thesis has to conform to
+%  http://www.informatik.tuwien.ac.at/dekanat
+
+\addtitlepage{naustrian} % German title page (not for dissertations at the PhD School).
+\addtitlepage{english} % English title page.
+\addstatementpage
+
+\begin{danksagung*}
+\input{chapters/danksagung}
+\end{danksagung*}
+
+\begin{acknowledgements*}
+\input{chapters/acknowledgements}
+\end{acknowledgements*}
+
+\begin{kurzfassung}
+\input{chapters/kurzfassung}
+\end{kurzfassung}
+
+\begin{abstract}
+\input{chapters/abstract}
+\end{abstract}
+
+% Select the language of the thesis, e.g., english or naustrian.
+\selectlanguage{english}
+
+% Add a table of contents (toc).
+\tableofcontents % Starred version, i.e., \tableofcontents*, removes the self-entry.
+
+% Switch to arabic numbering and start the enumeration of chapters in the table of content.
+\mainmatter
+
+\chapter{Introduction}
+\input{chapters/introduction}
+
+\chapter{State-of-the-art} \label{chap:state}
+\input{chapters/state_of_the_art}
+
+\chapter{Simulation framework}
+\input{chapters/simulation_framework}
+
+\chapter{Evaluation of simulation framework}
+\input{chapters/evaluation_simulation_framework}
+
+\chapter{Selfish proxy}
+\input{chapters/selfish_proxy}
+
+\chapter{Simulation of selfish mining strategies}
+\input{chapters/simulation}
+
+\chapter{Evaluation}
+\input{chapters/evaluation}
+
+\chapter{Further research}
+\input{chapters/further_research}
+
+\chapter{Conclusion}
+\input{chapters/conclusion}
+
+% Remove following line for the final thesis.
+%\input{intro.tex} % A short introduction to LaTeX.
+
+%\input{glossary.tex}
+
+\backmatter
+
+% Use an optional list of figures.
+\listoffigures % Starred version, i.e., \listoffigures*, removes the toc entry.
+
+% Use an optional list of tables.
+\cleardoublepage % Start list of tables on the next empty right hand page.
+\listoftables % Starred version, i.e., \listoftables*, removes the toc entry.
+
+% Use an optional list of alogrithms.
+% \listofalgorithms
+% \addcontentsline{toc}{chapter}{List of Algorithms}
+\cleardoublepage
+\lstlistoflistings
+
+% Add a glossary.
+%\printglossaries
+
+% Add a bibliography.
+\bibliographystyle{alpha}
+\bibliography{library,web}
+
+\end{document}

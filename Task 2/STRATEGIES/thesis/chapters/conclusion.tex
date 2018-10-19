@@ -1,0 +1,8 @@
+In this thesis, the selfish mining attack was simulated by using a novel simulation framework based on \textit{Docker}.
+Despite previous simulation approaches, the framework allows to naturally include the network latency in the simulation and to directly reuse the reference implementation of Bitcoin.
+The selfish mining itself is implemented in a separate node.
+This node eclipses a normal peer of the network and conducts selfish mining by withholding blocks created by the eclipsed peer.
+
+The results of the simulation showed that the attack increases the relative gain of the selfish miner and hence, emphasises the relevance of the selfish mining attack.
+As the most promising selfish mining strategies, the normal selfish mining and equal-fork-stubbornness were identified.
+In the scenario where the selfish miner has 45\% of the mining power, the two strategies were able to increase the gain of the selfish miner by 4.1\% and 5\% respectively.
