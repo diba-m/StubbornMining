@@ -1,9 +1,0 @@
-before_script:
-  - python --version
-  - pip install pytest-cov
-
-unittest:
-  script:
-    - cd code
-    - PYTHONPATH="selfish_proxy" python -m unittest discover
-    - PYTHONPATH="selfish_proxy" py.test --cov=selfish_proxy tests
