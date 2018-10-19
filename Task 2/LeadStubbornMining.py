@@ -26,10 +26,12 @@ def SimulateLeadStubborn(alpha, gamma, iteration):
         elif state == 1:
             if r<alpha:
                 state = 2
-                P.honest_chain += 1
+                P.private_chain += 1
                 P.unpublished_blocks += 1
             else:
                 state = -1
+                P.honest_blocks += 1
+                P.honest_chain += 1
                 P.unpublished_blocks = 0
                 P.stubborn_blocks += 1 #???
         elif state == 2:
@@ -49,7 +51,7 @@ def SimulateLeadStubborn(alpha, gamma, iteration):
                         P.private_chain += 1
                         P.unpublished_blocks += 1
                 else:
-                        state -= 1
+                        state = -state
                         P.unpublished_blocks -= 1
                         P.honest_chain += 1
                         P.stubborn_blocks += 1 #???
@@ -79,7 +81,7 @@ def SimulateLeadStubborn(alpha, gamma, iteration):
                         state -= 1
                         P.unpublished_blocks += 1
                         P.private_chain += 1
-                elif r<=alpha+(1-alpha)*gamma:
+                elif r<=(1-alpha)*(1-gamma):
                         state = -1
                         P.honest_chain += 1
                         P.honest_blocks += 1 #???
@@ -108,7 +110,7 @@ def SimulateLeadStubborn(alpha, gamma, iteration):
                         state += 1
                         P.unpublished_blocks -= 1
                         P.honest_orphans += 1
-                        P.honest_chain += 1
+                        P.honest_chain = 1
                         P.stubborn_blocks += 1 #???
                         P.honest_blocks += 1 #???
     return P
@@ -119,10 +121,10 @@ def main():
     iteration = 10000
     P = SimulateLeadStubborn(alpha, gamma, iteration)
 
-    print("\n Iterationations | %d \n α | %f (Selfish miner hash power) \n γ | %f (Proportion of honest miners which mine on the selfish pool)" % (iteration, alpha, gamma))
-    #print("\n Theoretical Performance | %f \n Simulated Performance | %f" % ((alpha*(1-alpha)**2*(4*alpha+gamma*(1-2*alpha))-alpha**3)/(1-alpha*(1+(2-alpha)*alpha)), P.stubborn_blocks / float(P.stubborn_blocks + P.honest_blocks)))
-    #print("\n Selfish Blocks Mined | %d \n Honest Blocks Mined | %d \n (Selfish Blocks Mined)/(Total Blocks Mined) | %f" % (P.stubborn_blocks, P.honest_blocks, P.stubborn_blocks / float(P.stubborn_blocks + P.honest_blocks)))
-    #print("\n Selfish Orphan Blocks | %d \n Honest Orphan Blocks |  %d" % (P.selfish_orphans, P.honest_orphans))
+    print("\n Iterationations | %d \n alpha | %f (Selfish miner hash power) \n gamma | %f (Proportion of honest miners which mine on the selfish pool)" % (iteration, alpha, gamma))
+    print("\n Theoretical Performance | %f \n Simulated Performance | %f" % ((alpha*(1-alpha)**2*(4*alpha+gamma*(1-2*alpha))-alpha**3)/(1-alpha*(1+(2-alpha)*alpha)), P.stubborn_blocks / float(P.stubborn_blocks + P.honest_blocks)))
+    print("\n Selfish Blocks Mined | %d \n Honest Blocks Mined | %d \n (Selfish Blocks Mined)/(Total Blocks Mined) | %f" % (P.stubborn_blocks, P.honest_blocks, P.stubborn_blocks / float(P.stubborn_blocks + P.honest_blocks)))
+    print("\n Selfish Orphan Blocks | %d \n Honest Orphan Blocks |  %d" % (P.stubborn_orphans, P.honest_orphans))
     print(" Difficulty | %d percent" % (float(P.stubborn_blocks + P.honest_blocks)/iteration*100))
 
     print(P.stubborn_blocks)
